@@ -16,9 +16,9 @@ def toBytes(filedata):
 	image.save(byteArr,format=image.format)
 	return byteArr.getvalue()
 	
-def saveImage(filename,filedata):
+def saveImage(filename,filedata,size):
 	try:
-	    image = Image.frombytes("RGB",(3,3),filedata,"raw")#Image.fromarray(filedata,"RGB")
+	    image = Image.frombytes("RGB",size,filedata,"raw")#Image.fromarray(filedata,"RGB")
 		#Image.frombytes("RGB",(30,30),filedata)?
 	except IOError:
 	    pass
@@ -28,7 +28,7 @@ def saveImage(filename,filedata):
 
 #Testing
 #if len(sys.argv) == 2:
-	filename = sys.argv[1]
+#	filename = sys.argv[1]
 
 #print('Filename ',filename)
 #image = getImage(filename)
