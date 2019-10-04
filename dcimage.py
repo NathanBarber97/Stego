@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import io
 import sys
 from PIL import Image
 
@@ -10,10 +11,14 @@ def getImage(filename):
 	else:
 	    return image
 
-
+def toBytes(filedata):
+	byteArr = io.BytesIO()
+	image.save(byteArr,format=image.format)
+	return byteArr.getvalue()
+	
 def saveImage(filename,filedata):
 	try:
-	    image = Image.fromarray(filedata,"RGB")
+	    image = Image.frombytes("RGB",(3,3),filedata,"raw")#Image.fromarray(filedata,"RGB")
 		#Image.frombytes("RGB",(30,30),filedata)?
 	except IOError:
 	    pass
@@ -21,10 +26,16 @@ def saveImage(filename,filedata):
 	    image.save(filename)
 
 
-if len(sys.argv) == 2:
+#Testing
+#if len(sys.argv) == 2:
 	filename = sys.argv[1]
 
-print('Filename ',filename)
-image = getImage(filename)
-print('Image Data: ',image)
-saveImage('New Image.bmp',[[233,101,101]])
+#print('Filename ',filename)
+#image = getImage(filename)
+#print('Image Data: ',image)
+#print('Image as Bytes', image.tobytes())
+#byteArr = io.BytesIO()
+#image.save(byteArr,format=image.format)
+#print('Image as array', byteArr.getvalue())
+#saveImage('Pillow_bytes.bmp',image.tobytes())
+#saveImage('IO_bytes.bmp',byteArr.getvalue())
