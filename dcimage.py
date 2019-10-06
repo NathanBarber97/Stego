@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import io
 import sys
 from PIL import Image
@@ -9,6 +9,7 @@ def getImage(filename):
 	except IOError:
 	    pass
 	else:
+	    print("Got Image")
 	    return image
 
 def toBytes(filedata):
