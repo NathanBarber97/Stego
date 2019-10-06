@@ -42,11 +42,12 @@ def extractmsg(stegoImg, password):
     if index == -1:
         print ("@!590 not found")
     #print(encryptedMsg[:index].encode())
-    hiddenMsg = (decrypt(encryptedMsg[:index].encode(), password)).decode()
+    hiddenBytes = (decrypt(encryptedMsg[:index].encode(), password.encode()))
+    hiddenMsg = hiddenBytes.decode("utf-8","replace")
     headerIndex = hiddenMsg.find('@header')
     messageIndex = hiddenMsg.find('@message')
     endIndex = hiddenMsg.find('@end')
-    return hiddenMsg[headerIndex + 7 : messageIndex], hiddenMsg[messageIndex + 8 : endIndex]
+    return hiddenMsg[headerIndex + 7 : messageIndex], hiddenBytes[messageIndex + 8 : endIndex]
 
 def convertBitstoBytes(bits):
     byteChunks = [bits[i:i+8] for i in range(0, len(bits), 8)]

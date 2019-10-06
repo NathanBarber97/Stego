@@ -19,7 +19,10 @@ def toBytes(filedata):
 	
 def saveImage(filename,filedata,size):
 	try:
-	    image = Image.frombytes("RGB",size,filedata,"raw")#Image.fromarray(filedata,"RGB")
+	    print("Image Size: ",size)
+	    print("File data ",len(filedata))
+	    image = Image.frombytes("RGB",size,filedata,"raw")
+		#Image.fromarray(filedata,"RGB")
 		#Image.frombytes("RGB",(30,30),filedata)?
 	except IOError:
 	    pass
