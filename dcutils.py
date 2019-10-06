@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#
+#----------------------------------------------------------------------------------------------------------------------
 # 
 # Source File: dcutils.py
 # Program Usage: ./dcutils.py
@@ -11,7 +11,7 @@
 # Notes: Runs a Stegonography UI Application
 # Takes a Cover image and an image to hide, encrypts the hidden image then encodes
 # the bits into the cover image and saves as a new stego'd image
-#
+#----------------------------------------------------------------------------------------------------------------------
 
 #imports and global variable calls
 from tkinter import filedialog
@@ -23,11 +23,11 @@ srcimage = ''
 secretFileName = ''
 stegoFileName = ''
 stegoimage =''
-
+#----------------------------------------------------------------------------------------------------------------------
 #destImage
 #Opens dialogue window to choose Destination/Cover image
 #Sets object to "destimage"
-#
+#----------------------------------------------------------------------------------------------------------------------
 def destImage():
 	filename = filedialog.askopenfilename(initialdir = "",title = "Select destination image")
 	global destimage
@@ -48,12 +48,13 @@ def srcImage():
 	if secretFileName != () and secretFileName != '':
 		srcimage = dcimage.getImage(secretFileName)
 
+#----------------------------------------------------------------------------------------------------------------------
 #encrypt
 #If Cover image is more than 8 times bigger than the hidden image, encode name/size header and begin encryption
 #Passes image objects, Cover image size and new file name to saveImage in dcimage
 #Calls hidemsg in dcstego to get encrypted and encoded image bytes 
 #Saves stego'd image
-#
+#----------------------------------------------------------------------------------------------------------------------
 def encrypt():
 	global passEntry1	
 	if len(destimage.tobytes())/len(srcimage.tobytes()) > 8:
@@ -62,24 +63,26 @@ def encrypt():
 	else:
 	    print("File size to big to stego")
 
+#----------------------------------------------------------------------------------------------------------------------
 #stegoImage
 #Opens dialogue window to choose Stego'd image
 #Calls getImage from dcimage to return PIL Image object
 #Sets object to "stegoimage"
 #Sets name of file to "stegoFileName"
-#
+#----------------------------------------------------------------------------------------------------------------------
 def stegoImage():
 	global stegoFileName 
 	stegoFileName = filedialog.askopenfilename(initialdir = "",title = "Select stego'd image")
 	global stegoimage
 	if stegoFileName != () and stegoFileName != '':
 		stegoimage = dcimage.getImage(stegoFileName)
+#----------------------------------------------------------------------------------------------------------------------
 #decrypt
 #Calls extractmsg from dcstego to retrieve decoded and decrypted bytes from stego'd image
 #Passes in selected stedo image and password
 #Retrieves filename and bytes of image, decodes size of file from "secretFileName"
 #Calls saveImage from dcimage and saves hidden image as the original 
-#
+#----------------------------------------------------------------------------------------------------------------------
 def decrypt():
 	global passEntry2
 	secretFileName,secretImage = dcstego.extractmsg(stegoimage.tobytes(),passEntry2.get())
@@ -89,9 +92,9 @@ def decrypt():
 	dcimage.saveImage(secretFileName[:widthIndex],secretImage,(int(secretFileName[widthIndex+6:heightIndex]),int(secretFileName[heightIndex+7:])))
 
 
-#
+#----------------------------------------------------------------------------------------------------------------------
 # UI Window objects and their labels
-#
+#----------------------------------------------------------------------------------------------------------------------
 root = Tk()
 root.title("Stegostaurus")
 topFrame = Frame(root)
