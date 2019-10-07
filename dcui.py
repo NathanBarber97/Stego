@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-
+#
+#
+#
+#
+#
 from tkinter import filedialog
 from tkinter import *
 import dcimage
@@ -27,8 +31,11 @@ def srcImage():
 
 def encrypt():
 	global passEntry1	
-	header = secretFileName+"@width"+str(srcimage.width)+"@height"+str(srcimage.height)
-	dcimage.saveImage("secretimage.bmp",dcstego.hidemsg(destimage.tobytes(),srcimage.tobytes(),header.encode(),passEntry1.get()),destimage.size)
+	if len(destimage.tobytes())/len(srcimage.tobytes()) > 8:
+		header = secretFileName+"@width"+str(srcimage.width)+"@height"+str(srcimage.height)
+		dcimage.saveImage("secretimage.bmp",dcstego.hidemsg(destimage.tobytes(),srcimage.tobytes(),header.encode(),passEntry1.get()),destimage.size)
+	else:
+	    print("File size to big to stego")
 
 
 def stegoImage():
